@@ -12,11 +12,8 @@ public class CalculatorOperations {
 
     public CalculatorOperations(TextView numDisplay) {
 
-        this.leftOperand = 0;
         this.numberDisplay = numDisplay;
-        this.focusedStr = "0";
-        this.numberDisplay.setText(focusedStr);
-        operator = null;
+        this.clearAll();
     }
 
     public void appendNum(String num) {
@@ -39,6 +36,19 @@ public class CalculatorOperations {
         }
         this.focusedStr = "0";
         this.numberDisplay.setText((firstTime) ? this.focusedStr : Double.toString(this.leftOperand));
+    }
+
+    public void clearOne() {
+        this.focusedStr = this.focusedStr.substring(0, this.focusedStr.length() - 1);
+        this.focusedStr = (this.focusedStr.length() == 0) ? "0" : this.focusedStr;
+        this.numberDisplay.setText(this.focusedStr);
+    }
+
+    public void clearAll() {
+        this.focusedStr = "0";
+        this.leftOperand = 0;
+        this.operator = null;
+        this.numberDisplay.setText(this.focusedStr);
     }
 
     private double performOperation(double a, double b) {

@@ -71,16 +71,13 @@ public class CalculatorActivity extends ActionBarActivity {
     }
 
     public void operationButtonClicked(View v) {
-//        switch (v.getId()) {
-//            case R.id.btnC:
-//                inView = "0";
-//                break;
-//            case R.id.btnDel:
-//                inView = inView.substring(0, inView.length() - 1);
-//                break;
-//        }
-//
-//        inView = (inView.length() == 0) ? "0" : inView;
-//        numbers.setText(inView);
+        switch (v.getId()) {
+            case R.id.btnDel:
+                calcOps.clearOne();
+                break;
+            case R.id.btnC:
+                calcOps.clearAll();
+                break;
+        }
     }
 }
