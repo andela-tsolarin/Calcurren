@@ -4,14 +4,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 public class CalculatorActivity extends ActionBarActivity {
+
+    private TextView numbers;
+    private String inView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        numbers = (TextView) findViewById(R.id.figures);
+        inView = "";
     }
 
     @Override
@@ -34,5 +42,29 @@ public class CalculatorActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void numButtonClicked(View v) {
+        Button num = (Button) findViewById(v.getId());
+        inView = (numbers.getText() == "0") ? num.getText().toString() : inView + num.getText().toString();
+        numbers.setText(inView);
+    }
+
+    public void operatorButtonClicked(View v) {
+
+    }
+
+    public void operationButtonClicked(View v) {
+        switch (v.getId()) {
+            case R.id.btnC:
+                inView = "0";
+                break;
+            case R.id.btnDel:
+                inView = inView.substring(0, inView.length() - 1);
+                break;
+        }
+
+        inView = (inView.length() == 0) ? "0" : inView;
+        numbers.setText(inView);
     }
 }
