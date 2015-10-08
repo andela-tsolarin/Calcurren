@@ -7,19 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import com.andela.toni.calcurren.operations.CalculatorOperations;
+import com.andela.toni.calcurren.enums.MathOperator;
 
 public class CalculatorActivity extends ActionBarActivity {
 
-    private TextView numbers;
-    private String inView;
+    private CalculatorOperations calcOps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        numbers = (TextView) findViewById(R.id.figures);
-        inView = "";
+        TextView numDisplay = (TextView) findViewById(R.id.figures);
+        calcOps = new CalculatorOperations(numDisplay);
     }
 
     @Override
@@ -45,26 +45,42 @@ public class CalculatorActivity extends ActionBarActivity {
     }
 
     public void numButtonClicked(View v) {
-        Button num = (Button) findViewById(v.getId());
-        inView = (numbers.getText() == "0") ? num.getText().toString() : inView + num.getText().toString();
-        numbers.setText(inView);
+        Button btnNum = (Button) findViewById(v.getId());
+        calcOps.appendNum(btnNum.getText().toString());
     }
 
     public void operatorButtonClicked(View v) {
 
+        switch (v.getId()) {
+            case R.id.btnPlus:
+                calcOps.applyOperator(MathOperator.ADD);
+                break;
+            case R.id.btnMinus:
+                calcOps.applyOperator(MathOperator.SUBTRACT);
+                break;
+            case R.id.btnMult:
+                calcOps.applyOperator(MathOperator.MULTIPLY);
+                break;
+            case R.id.btnDiv:
+                calcOps.applyOperator(MathOperator.DIVIDE);
+                break;
+            case R.id.btnEquals:
+                calcOps.applyOperator(MathOperator.EQUAL);
+                break;
+        }
     }
 
     public void operationButtonClicked(View v) {
-        switch (v.getId()) {
-            case R.id.btnC:
-                inView = "0";
-                break;
-            case R.id.btnDel:
-                inView = inView.substring(0, inView.length() - 1);
-                break;
-        }
-
-        inView = (inView.length() == 0) ? "0" : inView;
-        numbers.setText(inView);
+//        switch (v.getId()) {
+//            case R.id.btnC:
+//                inView = "0";
+//                break;
+//            case R.id.btnDel:
+//                inView = inView.substring(0, inView.length() - 1);
+//                break;
+//        }
+//
+//        inView = (inView.length() == 0) ? "0" : inView;
+//        numbers.setText(inView);
     }
 }
