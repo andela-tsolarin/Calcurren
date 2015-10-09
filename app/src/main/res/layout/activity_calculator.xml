@@ -32,12 +32,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <!--<Button-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="CE"-->
+            <!--android:id="@+id/btnCE"-->
+            <!--android:textSize="@dimen/calc_num_size" />-->
+
+        <Spinner
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="CE"
-            android:id="@+id/btnCE"
-            android:textSize="@dimen/calc_num_size" />
+            android:id="@+id/currentCurrency" />
 
         <Button
             android:layout_width="80dp"

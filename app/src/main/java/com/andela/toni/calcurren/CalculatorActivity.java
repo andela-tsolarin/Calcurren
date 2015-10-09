@@ -1,42 +1,63 @@
 package com.andela.toni.calcurren;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.andela.toni.calcurren.helpers.ExchangeRateHelper;
+import com.andela.toni.calcurren.helpers.Helper;
+import com.andela.toni.calcurren.models.Quantity;
 import com.andela.toni.calcurren.operations.CalculatorOperations;
 import com.andela.toni.calcurren.enums.MathOperator;
 
-public class CalculatorActivity extends ActionBarActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CalculatorActivity extends AppCompatActivity {
 
     private CalculatorOperations calcOps;
+    private Spinner currSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         TextView numDisplay = (TextView) findViewById(R.id.figures);
+        currSpinner = (Spinner) findViewById(R.id.currentCurrency);
         calcOps = new CalculatorOperations(numDisplay);
+        Helper helper = new ExchangeRateHelper(this);
+        helper.getQuantities();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_calculator, menu);
         return true;
     }
 
+    public void populateSpinner(Quantity[] quantities) {
+
+        List<String> currencyList = new ArrayList<>();
+        for (int i = 0; i < quantities.length; i++) {
+            currencyList.add(quantities[i].getKey());
+        }
+
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencyList);
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currSpinner.setAdapter(currencyAdapter);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
