@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.andela.toni.calcurren.config.Globals;
 import com.andela.toni.calcurren.helpers.ExchangeRateHelper;
 import com.andela.toni.calcurren.helpers.Helper;
 import com.andela.toni.calcurren.models.Quantity;
@@ -52,6 +53,7 @@ public class CalculatorActivity extends AppCompatActivity {
     public void populateSpinner(Quantity[] quantities) {
 
         calcOps.setConversionQuantities(quantities);
+        Globals.QUANTITIES = quantities;
         List<String> currencyList = new ArrayList<>();
         for (int i = 0; i < quantities.length; i++) {
             currencyList.add(quantities[i].getKey());

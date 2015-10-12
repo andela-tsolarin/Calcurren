@@ -2,16 +2,28 @@ package com.andela.toni.calcurren;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.andela.toni.calcurren.config.Globals;
+import com.andela.toni.calcurren.models.Quantity;
+import com.andela.toni.calcurren.operations.QuantityOperations;
 
-public class TopCurrenciesActivity extends ActionBarActivity {
+import java.util.List;
+
+
+public class TopCurrenciesActivity extends AppCompatActivity {
+
+    private List<String> currencyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_currencies);
+        if (Globals.QUANTITIES != null) {
+            getTopTen();
+        }
     }
 
     @Override
@@ -34,5 +46,14 @@ public class TopCurrenciesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getTopTen() {
+        QuantityOperations qOps = new QuantityOperations();
+        List<Quantity> quantities = qOps.getSorted(Globals.QUANTITIES);
+        int upperLimit = (quantities.size() < 10) ? quantities.size() : 10;
+        for (int i = 0; i < upperLimit; i++) {
+            this.currencyList.add(quantities.get(i).getKey());
+        }
     }
 }
