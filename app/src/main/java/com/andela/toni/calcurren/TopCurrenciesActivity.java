@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.andela.toni.calcurren.config.Globals;
 import com.andela.toni.calcurren.models.Quantity;
 import com.andela.toni.calcurren.operations.QuantityOperations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,9 +24,18 @@ public class TopCurrenciesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_currencies);
+        this.currencyList = new ArrayList<>();
         if (Globals.QUANTITIES != null) {
             getTopTen();
+            populateListView();
         }
+    }
+
+    private void populateListView() {
+        ListView lvCurrrency = (ListView)findViewById(R.id.listViewCurrencies);
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, this.currencyList);
+        lvCurrrency.setAdapter(arrayAdapter);
     }
 
     @Override
