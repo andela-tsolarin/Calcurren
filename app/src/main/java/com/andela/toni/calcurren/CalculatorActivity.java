@@ -1,8 +1,8 @@
 package com.andela.toni.calcurren;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +17,8 @@ import com.andela.toni.calcurren.models.Quantity;
 import com.andela.toni.calcurren.operations.CalculatorOperations;
 import com.andela.toni.calcurren.enums.MathOperator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +26,19 @@ public class CalculatorActivity extends AppCompatActivity {
 
     private CalculatorOperations calcOps;
     private Spinner currSpinner;
+    private Spinner baseSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         TextView numDisplay = (TextView) findViewById(R.id.figures);
+        TextView histDisplay = (TextView) findViewById(R.id.history);
+
         currSpinner = (Spinner) findViewById(R.id.currentCurrency);
-        calcOps = new CalculatorOperations(numDisplay);
+        baseSpinner = (Spinner) findViewById(R.id.baseCurrency);
+        calcOps = new CalculatorOperations(numDisplay, histDisplay);
+
         Helper helper = new ExchangeRateHelper(this);
         helper.getQuantities();
     }
@@ -44,6 +51,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void populateSpinner(Quantity[] quantities) {
 
+        calcOps.setConversionQuantities(quantities);
         List<String> currencyList = new ArrayList<>();
         for (int i = 0; i < quantities.length; i++) {
             currencyList.add(quantities[i].getKey());
@@ -52,6 +60,7 @@ public class CalculatorActivity extends AppCompatActivity {
         ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencyList);
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currSpinner.setAdapter(currencyAdapter);
+        baseSpinner.setAdapter(currencyAdapter);
     }
 
     @Override
@@ -65,6 +74,11 @@ public class CalculatorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void topCurrenciesClicked(View v) {
+        Intent topCurrenciesIntent = new Intent(this, TopCurrenciesActivity.class);
+        startActivity(topCurrenciesIntent);
+    }
+
     public void numButtonClicked(View v) {
         Button btnNum = (Button) findViewById(v.getId());
         calcOps.appendNum(btnNum.getText().toString());
@@ -72,21 +86,24 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void operatorButtonClicked(View v) {
 
+        String curr = currSpinner.getSelectedItem().toString();
+        String base = baseSpinner.getSelectedItem().toString();
+
         switch (v.getId()) {
             case R.id.btnPlus:
-                calcOps.applyOperator(MathOperator.ADD);
+                calcOps.applyOperator(MathOperator.ADD, curr, base);
                 break;
             case R.id.btnMinus:
-                calcOps.applyOperator(MathOperator.SUBTRACT);
+                calcOps.applyOperator(MathOperator.SUBTRACT, curr, base);
                 break;
             case R.id.btnMult:
-                calcOps.applyOperator(MathOperator.MULTIPLY);
+                calcOps.applyOperator(MathOperator.MULTIPLY, curr, base);
                 break;
             case R.id.btnDiv:
-                calcOps.applyOperator(MathOperator.DIVIDE);
+                calcOps.applyOperator(MathOperator.DIVIDE, curr, base);
                 break;
             case R.id.btnEquals:
-                calcOps.applyOperator(MathOperator.EQUAL);
+                calcOps.applyOperator(MathOperator.EQUAL, curr, base);
                 break;
         }
     }

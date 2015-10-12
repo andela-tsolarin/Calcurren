@@ -1,5 +1,7 @@
 package com.andela.toni.calcurren.operations;
 
+import android.util.Log;
+
 import com.andela.toni.calcurren.helpers.Helper;
 import com.loopj.android.http.*;
 import com.andela.toni.calcurren.config.Constants;
@@ -20,6 +22,11 @@ public class NetworkOperations {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 helper.finished(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+                Log.d("Error", "Error occured");
             }
 
         });

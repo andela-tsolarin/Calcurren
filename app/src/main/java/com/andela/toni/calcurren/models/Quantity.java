@@ -1,8 +1,6 @@
 package com.andela.toni.calcurren.models;
 
-/**
- * Created by Andela on 10/9/15.
- */
+
 public class Quantity {
 
     private String key;

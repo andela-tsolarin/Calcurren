@@ -9,6 +9,41 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top Currencies"
+            android:onClick="topCurrenciesClicked"
+            android:id="@+id/topCurrencies" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/baseCurrency" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/history"
+            android:textSize="@dimen/hist_size"
+            android:padding="15dp"
+            android:textColor="#000000" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -23,7 +58,9 @@
             android:textSize="@dimen/num_size"
             android:padding="15dp"
             android:textColor="#000000"
-            android:gravity="right" />
+            android:gravity="right"
+            android:maxLength="14"
+            android:maxLines="1" />
 
     </LinearLayout>
 
@@ -31,13 +68,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--<Button-->
-            <!--android:layout_width="80dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="CE"-->
-            <!--android:id="@+id/btnCE"-->
-            <!--android:textSize="@dimen/calc_num_size" />-->
 
         <Spinner
             android:layout_width="80dp"

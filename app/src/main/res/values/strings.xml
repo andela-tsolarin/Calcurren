@@ -6,4 +6,5 @@
     <string name="equals">=</string>
     <string name="point">.</string>
     <string name="zeroo">0</string>
+    <string name="title_activity_top_currencies">TopCurrenciesActivity</string>
 </resources>

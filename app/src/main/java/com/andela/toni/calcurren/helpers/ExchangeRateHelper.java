@@ -9,9 +9,6 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-/**
- * Created by Andela on 10/9/15.
- */
 public class ExchangeRateHelper implements Helper {
 
     private CalculatorActivity activity;
