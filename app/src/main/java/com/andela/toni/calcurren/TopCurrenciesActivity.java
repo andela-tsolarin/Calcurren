@@ -32,10 +32,13 @@ public class TopCurrenciesActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        ListView lvCurrrency = (ListView)findViewById(R.id.listViewCurrencies);
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, this.currencyList);
-        lvCurrrency.setAdapter(arrayAdapter);
+        ListView lvCurrency = (ListView)findViewById(R.id.listViewCurrencies);
+        ArrayAdapter<String> arrayAdapter = getCurrencyAdapter();
+        lvCurrency.setAdapter(arrayAdapter);
+    }
+
+    private ArrayAdapter<String> getCurrencyAdapter() {
+        return new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, this.currencyList);
     }
 
     @Override

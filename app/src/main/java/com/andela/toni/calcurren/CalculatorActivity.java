@@ -26,6 +26,7 @@ import java.util.List;
 public class CalculatorActivity extends AppCompatActivity {
 
     private CalculatorOperations calcOps;
+    private List<String> currencyList;
     private Spinner currSpinner;
     private Spinner baseSpinner;
 
@@ -54,15 +55,20 @@ public class CalculatorActivity extends AppCompatActivity {
 
         calcOps.setConversionQuantities(quantities);
         Globals.QUANTITIES = quantities;
-        List<String> currencyList = new ArrayList<>();
+        this.currencyList = new ArrayList<>();
         for (int i = 0; i < quantities.length; i++) {
             currencyList.add(quantities[i].getKey());
         }
 
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, currencyList);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> currencyAdapter = getCurrencyAdapter();
         currSpinner.setAdapter(currencyAdapter);
         baseSpinner.setAdapter(currencyAdapter);
+    }
+
+    private ArrayAdapter<String> getCurrencyAdapter() {
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.currencyList);
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return currencyAdapter;
     }
 
     @Override
