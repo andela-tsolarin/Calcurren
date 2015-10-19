@@ -116,6 +116,9 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void operatorButtonClicked(View v) {
 
+        String currentQuantity = currSpinner.getSelectedItem().toString();
+        String baseQuantity = baseSpinner.getSelectedItem().toString();
+
         String displayNum = this.numDisplay.getText().toString();
 
         if (displayNum.equals("0")) {
@@ -124,19 +127,19 @@ public class CalculatorActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.btnPlus:
-                displayNum = calcOps.addOperand(displayNum, MathOperator.ADD);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.ADD, currentQuantity, baseQuantity);
                 break;
             case R.id.btnMinus:
-                displayNum = calcOps.addOperand(displayNum, MathOperator.SUBTRACT);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.SUBTRACT, currentQuantity, baseQuantity);
                 break;
             case R.id.btnMult:
-                displayNum = calcOps.addOperand(displayNum, MathOperator.MULTIPLY);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.MULTIPLY, currentQuantity, baseQuantity);
                 break;
             case R.id.btnDiv:
-                displayNum = calcOps.addOperand(displayNum, MathOperator.DIVIDE);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.DIVIDE, currentQuantity, baseQuantity);
                 break;
             case R.id.btnEquals:
-                displayNum = calcOps.addOperand(displayNum, MathOperator.EQUAL);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.EQUAL, currentQuantity, baseQuantity);
                 break;
         }
 

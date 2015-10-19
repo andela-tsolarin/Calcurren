@@ -43,23 +43,24 @@ public class CalculatorOperations {
         return symbol;
     }
 
-    public String addOperand(String num, MathOperator operator) {
+    public String addOperand(String num, MathOperator operator, String currentQuantity, String baseQuantity) {
 
-        String displayStr = performCalculation(num, operator);
-        addToHistory(num, operator);
+        String displayStr = performCalculation(num, operator, currentQuantity, baseQuantity);
+        addToHistory(num, operator, currentQuantity);
         return displayStr;
     }
 
-    private void addToHistory(String num, MathOperator operator) {
-        this.history += num + " " + getOperatorSymbol(operator) + " ";
+    private void addToHistory(String num, MathOperator operator, String currentQuantity) {
+        this.history += currentQuantity + " " + num + " " + getOperatorSymbol(operator) + " ";
     }
 
-    private String performCalculation(String num, MathOperator operator) {
+    private String performCalculation(String num, MathOperator operator, String currentQuantity, String baseQuantity) {
         boolean firstTime = this.operator == null;
         if (firstTime) {
             clearHistory();
         }
         double focusedNum = Double.parseDouble(num);
+        focusedNum = converter.convert(currentQuantity, baseQuantity, focusedNum, this.quantities);
         this.leftOperand = (this.operator == null) ? focusedNum : performOperation(this.leftOperand, focusedNum);
         this.operator = operator;
         if (this.operator == MathOperator.EQUAL) {
