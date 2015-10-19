@@ -1,7 +1,5 @@
 package com.andela.toni.calcurren.operations;
 
-import android.widget.*;
-
 import com.andela.toni.calcurren.enums.MathOperator;
 import com.andela.toni.calcurren.converters.Converter;
 import com.andela.toni.calcurren.models.Quantity;
@@ -58,19 +56,21 @@ public class CalculatorOperations {
 
     private String performCalculation(String num, MathOperator operator) {
         boolean firstTime = this.operator == null;
+        if (firstTime) {
+            clearHistory();
+        }
         double focusedNum = Double.parseDouble(num);
         this.leftOperand = (this.operator == null) ? focusedNum : performOperation(this.leftOperand, focusedNum);
         this.operator = operator;
         if (this.operator == MathOperator.EQUAL) {
-            clearHistory();
+            this.operator = null;
         }
 
         String number = "0";
         return (firstTime) ? number : Double.toString(this.leftOperand);
     }
 
-    private void clearHistory() {
-        this.operator = null;
+    public void clearHistory() {
         this.history = "";
     }
 

@@ -3,7 +3,6 @@ package com.andela.toni.calcurren;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +19,6 @@ import com.andela.toni.calcurren.helpers.Helper;
 import com.andela.toni.calcurren.models.Quantity;
 import com.andela.toni.calcurren.operations.CalculatorOperations;
 import com.andela.toni.calcurren.enums.MathOperator;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +118,10 @@ public class CalculatorActivity extends AppCompatActivity {
 
         String displayNum = this.numDisplay.getText().toString();
 
+        if (displayNum.equals("0")) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.btnPlus:
                 displayNum = calcOps.addOperand(displayNum, MathOperator.ADD);
@@ -144,7 +145,26 @@ public class CalculatorActivity extends AppCompatActivity {
         this.histDisplay.setText(calcOps.getHistory());
     }
 
+    public void backSpace() {
+
+        String displayNum = this.numDisplay.getText().toString();
+        displayNum = displayNum.substring(0, displayNum.length() - 1);
+        displayNum = (displayNum.length() == 0) ? "0" : displayNum;
+        this.numDisplay.setText(displayNum);
+    }
+
     public void operationButtonClicked(View v) {
 
+        switch (v.getId()) {
+            case R.id.btnDel:
+                backSpace();
+                break;
+            case R.id.btnC:
+                calcOps.clearHistory();
+                this.numDisplay.setText("0");
+                break;
+        }
+
+        this.histDisplay.setText(calcOps.getHistory());
     }
 }
