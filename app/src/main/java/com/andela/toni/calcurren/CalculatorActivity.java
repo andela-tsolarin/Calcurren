@@ -3,6 +3,7 @@ package com.andela.toni.calcurren;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andela.toni.calcurren.config.Globals;
+import com.andela.toni.calcurren.converters.Converter;
+import com.andela.toni.calcurren.converters.CurrencyConverter;
 import com.andela.toni.calcurren.helpers.ExchangeRateHelper;
 import com.andela.toni.calcurren.helpers.Helper;
 import com.andela.toni.calcurren.models.Quantity;
@@ -29,17 +32,24 @@ public class CalculatorActivity extends AppCompatActivity {
     private List<String> currencyList;
     private Spinner currSpinner;
     private Spinner baseSpinner;
+    private boolean operatorClicked;
+
+    TextView numDisplay;
+    TextView histDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        TextView numDisplay = (TextView) findViewById(R.id.figures);
-        TextView histDisplay = (TextView) findViewById(R.id.history);
+        Converter converter = new CurrencyConverter();
+
+        numDisplay = (TextView) findViewById(R.id.figures);
+        histDisplay = (TextView) findViewById(R.id.history);
+        this.operatorClicked = false;
 
         currSpinner = (Spinner) findViewById(R.id.currentCurrency);
         baseSpinner = (Spinner) findViewById(R.id.baseCurrency);
-        calcOps = new CalculatorOperations(numDisplay, histDisplay);
+        calcOps = new CalculatorOperations(converter);
 
         Helper helper = new ExchangeRateHelper(this);
         helper.getQuantities();
@@ -88,42 +98,53 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void numButtonClicked(View v) {
+
         Button btnNum = (Button) findViewById(v.getId());
-        calcOps.appendNum(btnNum.getText().toString());
+        String tappedNum = btnNum.getText().toString();
+        String displayNum = this.numDisplay.getText().toString();
+
+        if (displayNum.equals("0") && tappedNum.equals("0")) {
+            // Do nothing
+        } else{
+
+            if (displayNum.length() == 1 && displayNum.equals("0") || this.operatorClicked) {
+                this.numDisplay.setText(tappedNum);
+            } else {
+                this.numDisplay.append(tappedNum);
+            }
+        }
+
+        this.operatorClicked = false;
     }
 
     public void operatorButtonClicked(View v) {
 
-        String curr = currSpinner.getSelectedItem().toString();
-        String base = baseSpinner.getSelectedItem().toString();
+        String displayNum = this.numDisplay.getText().toString();
 
         switch (v.getId()) {
             case R.id.btnPlus:
-                calcOps.applyOperator(MathOperator.ADD, curr, base);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.ADD);
                 break;
             case R.id.btnMinus:
-                calcOps.applyOperator(MathOperator.SUBTRACT, curr, base);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.SUBTRACT);
                 break;
             case R.id.btnMult:
-                calcOps.applyOperator(MathOperator.MULTIPLY, curr, base);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.MULTIPLY);
                 break;
             case R.id.btnDiv:
-                calcOps.applyOperator(MathOperator.DIVIDE, curr, base);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.DIVIDE);
                 break;
             case R.id.btnEquals:
-                calcOps.applyOperator(MathOperator.EQUAL, curr, base);
+                displayNum = calcOps.addOperand(displayNum, MathOperator.EQUAL);
                 break;
         }
+
+        this.operatorClicked = true;
+        this.numDisplay.setText(displayNum);
+        this.histDisplay.setText(calcOps.getHistory());
     }
 
     public void operationButtonClicked(View v) {
-        switch (v.getId()) {
-            case R.id.btnDel:
-                calcOps.clearOne();
-                break;
-            case R.id.btnC:
-                calcOps.clearAll();
-                break;
-        }
+
     }
 }

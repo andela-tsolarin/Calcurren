@@ -2,64 +2,32 @@ package com.andela.toni.calcurren.operations;
 
 import android.widget.*;
 
-import com.andela.toni.calcurren.converters.CurrencyConverter;
 import com.andela.toni.calcurren.enums.MathOperator;
 import com.andela.toni.calcurren.converters.Converter;
 import com.andela.toni.calcurren.models.Quantity;
 
-import org.w3c.dom.Text;
-
 public class CalculatorOperations {
 
-    private String focusedStr;
-    private TextView numberDisplay;
-    private TextView histDisplay;
-    private double leftOperand;
-    private MathOperator operator;
     private Converter converter;
     private Quantity[] quantities;
+    private String history;
+    private double leftOperand;
+    private MathOperator operator;
 
-    public CalculatorOperations(TextView numDisplay, TextView histDisplay) {
-
-        this.numberDisplay = numDisplay;
-        this.histDisplay = histDisplay;
-        this.clearAll();
-        this.converter = new CurrencyConverter();
-    }
-
-    public void appendNum(String num) {
-
-        if (this.focusedStr.length() < 14) {
-            this.focusedStr = (this.focusedStr == "0") ? "" : this.focusedStr;
-            this.focusedStr = (this.numberDisplay.getText() == "0") ? num : this.focusedStr + num;
-            this.numberDisplay.setText(this.focusedStr);
-        }
+    public CalculatorOperations(Converter converter) {
+        this.converter = converter;
+        this.history = "";
     }
 
     public void setConversionQuantities(Quantity[] quantities) {
         this.quantities = quantities;
     }
 
-    public void applyOperator(MathOperator op, String curr, String base) {
-
-        boolean firstTime = this.operator == null;
-        double focusedNum = Double.parseDouble(this.focusedStr);
-        focusedNum = converter.convert(curr, base, focusedNum, this.quantities);
-        this.leftOperand = (this.operator == null) ? focusedNum : performOperation(this.leftOperand, focusedNum);
-        this.operator = op;
-        addHistory(op, curr, focusedStr);
-        if (this.operator == MathOperator.EQUAL) {
-            this.operator = null;
-        }
-        this.focusedStr = "0";
-        this.numberDisplay.setText((firstTime) ? this.focusedStr : Double.toString(this.leftOperand));
-    }
-
-    public String getOperatorSymbol(MathOperator op) {
+    public String getOperatorSymbol(MathOperator operator) {
 
         String symbol = "";
 
-        switch (this.operator) {
+        switch (operator) {
             case ADD:
                 symbol = "+";
                 break;
@@ -77,21 +45,33 @@ public class CalculatorOperations {
         return symbol;
     }
 
-    public void addHistory(MathOperator op, String currency, String num) {
-        this.histDisplay.append(currency + " " + num + " " + getOperatorSymbol(op) + " ");
+    public String addOperand(String num, MathOperator operator) {
+
+        String displayStr = performCalculation(num, operator);
+        addToHistory(num, operator);
+        return displayStr;
     }
 
-    public void clearOne() {
-        this.focusedStr = this.focusedStr.substring(0, this.focusedStr.length() - 1);
-        this.focusedStr = (this.focusedStr.length() == 0) ? "0" : this.focusedStr;
-        this.numberDisplay.setText(this.focusedStr);
+    private void addToHistory(String num, MathOperator operator) {
+        this.history += num + " " + getOperatorSymbol(operator) + " ";
     }
 
-    public void clearAll() {
-        this.focusedStr = "0";
-        this.leftOperand = 0;
+    private String performCalculation(String num, MathOperator operator) {
+        boolean firstTime = this.operator == null;
+        double focusedNum = Double.parseDouble(num);
+        this.leftOperand = (this.operator == null) ? focusedNum : performOperation(this.leftOperand, focusedNum);
+        this.operator = operator;
+        if (this.operator == MathOperator.EQUAL) {
+            clearHistory();
+        }
+
+        String number = "0";
+        return (firstTime) ? number : Double.toString(this.leftOperand);
+    }
+
+    private void clearHistory() {
         this.operator = null;
-        this.numberDisplay.setText(this.focusedStr);
+        this.history = "";
     }
 
     private double performOperation(double a, double b) {
@@ -114,4 +94,9 @@ public class CalculatorOperations {
 
         return result;
     }
+
+    public String getHistory() {
+        return this.history;
+    }
+
 }
