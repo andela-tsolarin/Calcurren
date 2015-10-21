@@ -10,25 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Top Currencies"
-            android:onClick="topCurrenciesClicked"
-            android:id="@+id/topCurrencies" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <Spinner
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/baseCurrency" />
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
+            android:id="@+id/baseCurrency"
+            android:background="@color/accent_material_light" />
 
     </LinearLayout>
 
@@ -75,7 +61,8 @@
             android:layout_width="@dimen/btn_wide"
             android:layout_height="@dimen/btn_high"
             android:id="@+id/currentCurrency"
-            android:background="#800000" />
+            android:background="#800000"
+            android:foreground="@color/primary_material_light" />
 
         <Button
             android:layout_width="@dimen/btn_wide"

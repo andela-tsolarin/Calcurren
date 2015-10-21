@@ -60,7 +60,8 @@ public class CalculatorOperations {
             clearHistory();
         }
         double focusedNum = Double.parseDouble(num);
-        focusedNum = converter.convert(currentQuantity, baseQuantity, focusedNum, this.quantities);
+        focusedNum = (currentQuantity != null && baseQuantity != null) ?
+                converter.convert(currentQuantity, baseQuantity, focusedNum, this.quantities) : focusedNum;
         this.leftOperand = (this.operator == null) ? focusedNum : performOperation(this.leftOperand, focusedNum);
         this.operator = operator;
         if (this.operator == MathOperator.EQUAL) {

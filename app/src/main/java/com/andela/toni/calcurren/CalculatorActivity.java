@@ -83,15 +83,11 @@ public class CalculatorActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent topCurrenciesIntent = new Intent(this, TopCurrenciesActivity.class);
+            startActivity(topCurrenciesIntent);
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void topCurrenciesClicked(View v) {
-        Intent topCurrenciesIntent = new Intent(this, TopCurrenciesActivity.class);
-        startActivity(topCurrenciesIntent);
     }
 
     public void numButtonClicked(View v) {
