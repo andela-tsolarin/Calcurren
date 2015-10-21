@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_material_light">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -71,34 +72,39 @@
         android:layout_height="wrap_content">
 
         <Spinner
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/currentCurrency" />
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
+            android:id="@+id/currentCurrency"
+            android:background="#800000" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="C"
             android:id="@+id/btnC"
             android:onClick="operationButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="DEL"
             android:id="@+id/btnDel"
             android:onClick="operationButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_high"
             android:text="/"
             android:id="@+id/btnDiv"
             android:textSize="@dimen/calc_num_size"
             android:onClick="operatorButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#800000"
+            android:textColor="@color/primary_material_light" />
 
     </LinearLayout>
 
@@ -108,37 +114,42 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="7"
             android:id="@+id/btnSeven"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="8"
             android:id="@+id/btnEight"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="9"
             android:id="@+id/btnNine"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_high"
             android:text="*"
             android:id="@+id/btnMult"
             android:textSize="@dimen/calc_num_size"
             android:onClick="operatorButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#800000"
+            android:textColor="@color/primary_material_light" />
 
     </LinearLayout>
 
@@ -148,37 +159,42 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="4"
             android:id="@+id/btnFour"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="5"
             android:id="@+id/btnFive"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="6"
             android:id="@+id/btnSix"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_high"
             android:text="-"
             android:id="@+id/btnMinus"
             android:textSize="@dimen/calc_num_size"
             android:onClick="operatorButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#800000"
+            android:textColor="@color/primary_material_light" />
 
     </LinearLayout>
 
@@ -188,37 +204,42 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="1"
             android:id="@+id/btnOne"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="2"
             android:id="@+id/btnTwo"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="3"
             android:id="@+id/btnThree"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_high"
             android:text="+"
             android:id="@+id/btnPlus"
             android:textSize="@dimen/calc_num_size"
             android:onClick="operatorButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#800000"
+            android:textColor="@color/primary_material_light" />
 
     </LinearLayout>
 
@@ -228,29 +249,33 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="0"
             android:id="@+id/btnZero"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_wide"
+            android:layout_height="@dimen/btn_high"
             android:text="."
             android:id="@+id/btnPoint"
             android:onClick="numButtonClicked"
-            android:textSize="@dimen/calc_num_size" />
+            android:textSize="@dimen/calc_num_size"
+            android:background="@color/accent_material_light" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_high"
             android:text="="
             android:id="@+id/btnEquals"
             android:textSize="@dimen/calc_num_size"
             android:onClick="operatorButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#800000"
+            android:textColor="@color/primary_material_light" />
     </LinearLayout>
 
 </LinearLayout>

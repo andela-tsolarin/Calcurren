@@ -5,4 +5,6 @@
     <dimen name="calc_num_size">25dp</dimen>
     <dimen name="num_size">40dp</dimen>
     <dimen name="hist_size">12dp</dimen>
+    <dimen name="btn_wide">90dp</dimen>
+    <dimen name="btn_high">60dp</dimen>
 </resources>
