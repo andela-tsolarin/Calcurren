@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -29,6 +30,8 @@ public class CalculatorActivity extends AppCompatActivity {
     private List<String> currencyList;
     private Spinner currSpinner;
     private Spinner baseSpinner;
+    private String baseCurrency;
+    private Converter converter;
     private boolean operatorClicked;
 
     TextView numDisplay;
@@ -38,7 +41,7 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        Converter converter = new CurrencyConverter();
+        converter = new CurrencyConverter();
 
         numDisplay = (TextView) findViewById(R.id.figures);
         histDisplay = (TextView) findViewById(R.id.history);
@@ -70,6 +73,24 @@ public class CalculatorActivity extends AppCompatActivity {
         ArrayAdapter<String> currencyAdapter = getCurrencyAdapter();
         currSpinner.setAdapter(currencyAdapter);
         baseSpinner.setAdapter(currencyAdapter);
+
+        baseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String baseQuantity = baseSpinner.getSelectedItem().toString();
+                if (!numDisplay.getText().toString().equals("0")) {
+                    double num = Double.parseDouble(numDisplay.getText().toString());
+                    double res = converter.convert(baseCurrency, baseQuantity, num, Globals.QUANTITIES);
+                    numDisplay.setText(Double.toString(res));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private ArrayAdapter<String> getCurrencyAdapter() {
@@ -114,6 +135,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         String currentQuantity = currSpinner.getSelectedItem().toString();
         String baseQuantity = baseSpinner.getSelectedItem().toString();
+        this.baseCurrency = baseQuantity;
 
         String displayNum = this.numDisplay.getText().toString();
 
