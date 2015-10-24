@@ -8,6 +8,10 @@ public class CurrencyConverter implements Converter {
         Quantity fromQuantity = null;
         Quantity toQuantity = null;
 
+        if (quantities == null) {
+            return value;
+        }
+
         for (int i = 0; i < quantities.length; i++) {
 
             if (quantities[i].getKey() == from) {
