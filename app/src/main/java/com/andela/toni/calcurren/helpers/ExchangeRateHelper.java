@@ -1,6 +1,6 @@
 package com.andela.toni.calcurren.helpers;
 
-import com.andela.toni.calcurren.CalculatorActivity;
+import com.andela.toni.calcurren.callbacks.RatesCallback;
 import com.andela.toni.calcurren.models.Quantity;
 import com.andela.toni.calcurren.operations.NetworkOperations;
 
@@ -11,19 +11,20 @@ import java.util.Iterator;
 
 public class ExchangeRateHelper implements Helper {
 
-    private CalculatorActivity activity;
-    public ExchangeRateHelper(CalculatorActivity activity) {
-        this.activity = activity;
+    private RatesCallback callback;
+    public ExchangeRateHelper() {
+
     }
 
     @Override
-    public void getQuantities() {
+    public void getQuantities(RatesCallback callback) {
+        this.callback = callback;
         NetworkOperations networkOperations = new NetworkOperations();
         networkOperations.getJsonResponse(this);
     }
 
     @Override
-    public void finished(JSONObject response) {
+    public void parseResponse(JSONObject response) {
 
         Quantity[] quantities;
 
@@ -49,7 +50,7 @@ public class ExchangeRateHelper implements Helper {
             quantities = new Quantity[0];
         }
 
-        this.activity.populateSpinner(quantities);
+        callback.onfinish(quantities);
     }
 
 }

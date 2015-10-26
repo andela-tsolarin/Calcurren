@@ -51,6 +51,7 @@ public class CalculatorOperations {
     }
 
     private void addToHistory(String num, MathOperator operator, String currentQuantity) {
+        currentQuantity = currentQuantity == null ? "" : currentQuantity;
         this.history += currentQuantity + " " + num + " " + getOperatorSymbol(operator) + " ";
     }
 

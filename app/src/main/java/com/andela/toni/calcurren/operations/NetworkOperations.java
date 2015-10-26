@@ -21,7 +21,7 @@ public class NetworkOperations {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                helper.finished(response);
+                helper.parseResponse(response);
             }
 
             @Override

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.andela.toni.calcurren.callbacks.RatesCallback;
 import com.andela.toni.calcurren.config.Globals;
 import com.andela.toni.calcurren.converters.Converter;
 import com.andela.toni.calcurren.converters.CurrencyConverter;
@@ -51,8 +52,13 @@ public class CalculatorActivity extends AppCompatActivity {
         baseSpinner = (Spinner) findViewById(R.id.baseCurrency);
         calcOps = new CalculatorOperations(converter);
 
-        Helper helper = new ExchangeRateHelper(this);
-        helper.getQuantities();
+        Helper helper = new ExchangeRateHelper();
+        helper.getQuantities(new RatesCallback() {
+            @Override
+            public void onfinish(Quantity[] quantities) {
+                populateSpinners(quantities);
+            }
+        });
     }
 
     @Override
@@ -61,7 +67,7 @@ public class CalculatorActivity extends AppCompatActivity {
         return true;
     }
 
-    public void populateSpinner(Quantity[] quantities) {
+    public void populateSpinners(Quantity[] quantities) {
 
         calcOps.setConversionQuantities(quantities);
         Globals.QUANTITIES = quantities;
@@ -132,9 +138,14 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void operatorButtonClicked(View v) {
+        String currentQuantity = null;
+        String baseQuantity = null;
 
-        String currentQuantity = currSpinner.getSelectedItem().toString();
-        String baseQuantity = baseSpinner.getSelectedItem().toString();
+        if (currSpinner.getSelectedItem() != null || baseSpinner.getSelectedItem() != null) {
+            currentQuantity = currSpinner.getSelectedItem().toString();
+            baseQuantity = baseSpinner.getSelectedItem().toString();
+        }
+
         this.baseCurrency = baseQuantity;
 
         String displayNum = this.numDisplay.getText().toString();
